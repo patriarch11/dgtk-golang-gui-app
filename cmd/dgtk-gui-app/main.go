@@ -1,8 +1,8 @@
 package main
 
-import "github.com/patriarch11/dgtk-golang-gui-app/ui"
+import "github.com/patriarch11/dgtk-golang-gui-app/ui/app"
 
 func main() {
-	app := ui.NewUIApp()
-	app.Run()
+	a := app.NewUIApp()
+	a.App.Run()
 }
