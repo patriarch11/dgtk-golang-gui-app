@@ -23,17 +23,17 @@ type DirectGeodesicProbTab struct {
 func NewDirectGeodesicProbTab() *DirectGeodesicProbTab {
 	tab := &DirectGeodesicProbTab{}
 
-	tab.coordinatesContainer = containers.NewCoordinatesEntryContainer("Координати відомої")
+	tab.coordinatesContainer = containers.NewCoordinatesEntryContainer("Known coordinates")
 
 	tab.lengthEntry = entries.NewNumericalEntry()
-	lengthContainer := containers.NewLeftNamedContainer("Відстань до точкки", tab.lengthEntry)
+	lengthContainer := containers.NewLeftNamedContainer("Distance to point", tab.lengthEntry)
 
 	tab.azimuthEntry = entries.NewNumericalEntry()
-	azimuthContainer := containers.NewLeftNamedContainer("Азимут", tab.azimuthEntry)
+	azimuthContainer := containers.NewLeftNamedContainer("Azimuth", tab.azimuthEntry)
 
-	tab.resultLabel = containers.NewDynamicTextLabel("Результат:")
+	tab.resultLabel = containers.NewDynamicTextLabel("Result:")
 
-	processButton := widget.NewButton("Рахувати", func() {
+	processButton := widget.NewButton("Process", func() {
 		tab.ResolveProblem()
 	})
 	compositeContainer := container.New(layout.NewHBoxLayout(),
@@ -50,5 +50,5 @@ func (t *DirectGeodesicProbTab) ResolveProblem() {
 	azimuth, _ := strconv.ParseFloat(t.azimuthEntry.Text, 64)
 	s, _ := strconv.ParseFloat(t.lengthEntry.Text, 64)
 	res := geodesic.WGS84.Direct(lat, lon, azimuth, s)
-	t.resultLabel.SetValue(fmt.Sprintf("Координати точки:\n%.5f, %.5f\n", res.Lat2, res.Lon2))
+	t.resultLabel.SetValue(fmt.Sprintf("Coordinates of point:\n%.5f, %.5f\n", res.Lat2, res.Lon2))
 }

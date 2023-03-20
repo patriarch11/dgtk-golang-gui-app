@@ -21,8 +21,8 @@ func NewCoordinatesEntryContainer(text string) *CoordinatesEntryContainer {
 	cont.latEntry = entries.NewNumericalEntry()
 	cont.lonEntry = entries.NewNumericalEntry()
 
-	latLabel := widget.NewLabel("Довгота")
-	lonLabel := widget.NewLabel("Широта")
+	latLabel := widget.NewLabel("Latitude")
+	lonLabel := widget.NewLabel("Longitude")
 
 	xContainer := container.New(layout.NewHBoxLayout(), latLabel, cont.latEntry)
 	yContainer := container.New(layout.NewHBoxLayout(), lonLabel, cont.lonEntry)

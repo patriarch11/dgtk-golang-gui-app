@@ -21,11 +21,11 @@ func NewInverseGeodesicProbTab() *InverseGeodesicProbTab {
 	tab := &InverseGeodesicProbTab{}
 
 	tab.coordinatesT1Container = containers.NewCoordinatesEntryContainer(
-		"Координати точки 1")
+		"Coordinates of point 1")
 	tab.coordinatesT2Container = containers.NewCoordinatesEntryContainer(
-		"Координати точки 2")
-	tab.resultLabel = containers.NewDynamicTextLabel("Результат:")
-	processButton := widget.NewButton("Рахувати", func() {
+		"Coordinates of point 2")
+	tab.resultLabel = containers.NewDynamicTextLabel("Result:")
+	processButton := widget.NewButton("Process", func() {
 		tab.ResolveProblem()
 	})
 	compositeCoordsContainer := container.New(layout.NewVBoxLayout(), tab.coordinatesT1Container.Container,
@@ -44,7 +44,7 @@ func (t *InverseGeodesicProbTab) ResolveProblem() {
 	lat2, lon2 := t.coordinatesT2Container.GetCoordinates()
 	res := geodesic.WGS84.Inverse(lat1, lon1, lat2, lon2)
 
-	t.resultLabel.SetValue(fmt.Sprintf("Азимут1: %.2f, Азимут2: %.2f\nВідстань: %.2f",
+	t.resultLabel.SetValue(fmt.Sprintf("Azimuth1: %.2f, Azimuth2: %.2f\nDistance: %.2f",
 		res.Azi1, res.Azi2, res.S12))
 }
 

@@ -18,8 +18,8 @@ func NewUIApp(title string) *App {
 	directTab := tabs.NewDirectGeodesicProbTab()
 	inverseTab := tabs.NewInverseGeodesicProbTab()
 	a.tabs = container.NewAppTabs(
-		container.NewTabItem("ПГД", directTab.Container),
-		container.NewTabItem("ОГД", inverseTab.Container),
+		container.NewTabItem("Direct", directTab.Container),
+		container.NewTabItem("Inverse", inverseTab.Container),
 	)
 
 	window := a.NewWindow(title)
