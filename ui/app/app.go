@@ -16,9 +16,11 @@ func NewUIApp(title string) *App {
 	a := &App{}
 	a.App = app.New()
 	directTab := tabs.NewDirectGeodProbTab()
-	a.tabs = container.NewAppTabs(container.NewTabItem("direct", directTab.Container))
+	a.tabs = container.NewAppTabs(container.NewTabItem("ПГД", directTab.Container))
 
 	window := a.NewWindow(title)
+	window.SetFixedSize(true)
+	window.SetFullScreen(false)
 	window.SetContent(a.tabs)
 	window.Show()
 	return a

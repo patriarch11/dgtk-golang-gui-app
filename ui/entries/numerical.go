@@ -23,6 +23,7 @@ func (e *NumericalEntry) TypedRune(r rune) {
 }
 
 func (e *NumericalEntry) TypedShortcut(shortcut fyne.Shortcut) {
+
 	paste, ok := shortcut.(*fyne.ShortcutPaste)
 	if !ok {
 		e.Entry.TypedShortcut(shortcut)
@@ -33,4 +34,12 @@ func (e *NumericalEntry) TypedShortcut(shortcut fyne.Shortcut) {
 	if _, err := strconv.ParseFloat(content, 64); err == nil {
 		e.Entry.TypedShortcut(shortcut)
 	}
+}
+
+func (e *NumericalEntry) MinSize() fyne.Size {
+	return fyne.Size{Width: 100, Height: 30}
+}
+
+func (e *NumericalEntry) Size() fyne.Size {
+	return e.MinSize()
 }

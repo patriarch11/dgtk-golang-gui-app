@@ -11,36 +11,39 @@ import (
 
 type DirectGeodProbTab struct {
 	*fyne.Container
+	resultLabel          *containers.DynamicTextLabel
+	coordinatesContainer *containers.CoordinatesEntryContainer
+	azimuthEntry         *entries.NumericalEntry
+	lengthEntry          *entries.NumericalEntry
 }
 
 func NewDirectGeodProbTab() *DirectGeodProbTab {
+	tab := &DirectGeodProbTab{}
 
-	coordinatesContainer := containers.NewCoordinatesContainer()
+	coordinatesContainer := containers.NewCoordinatesEntryContainer()
 
-	// define length container
-	lengthEntry := entries.NewNumericalEntry()
-	lengthLabel := widget.NewLabel("Відстань")
-	lengthContainer := container.NewBorder(lengthLabel, lengthEntry, nil, nil)
+	tab.lengthEntry = entries.NewNumericalEntry()
+	lengthContainer := containers.NewLeftNamedContainer("Відстань", tab.lengthEntry)
 
-	// define azimuth container
-	azimuthEntry := entries.NewNumericalEntry()
-	azimuthLabel := widget.NewLabel("Азимут")
-	azimuthContainer := container.NewBorder(azimuthLabel, azimuthEntry, nil, nil)
+	tab.azimuthEntry = entries.NewNumericalEntry()
+	azimuthContainer := containers.NewLeftNamedContainer("Азимут", tab.azimuthEntry)
 
-	// define Result container
-	resultLabel := widget.NewLabel("Результат")
-	resultValueLabel := widget.NewLabel("Mock result")
-	resultContainer := container.NewBorder(resultLabel, resultValueLabel, nil, nil)
+	tab.resultLabel = containers.NewDynamicTextLabel("Результат:")
 
 	processButton := widget.NewButton("Рахувати", func() {
-
+		tab.ResolveProbe()
 	})
-	c := container.New(layout.NewGridLayout(2),
-		coordinatesContainer.Container,
-		lengthContainer,
-		azimuthContainer,
-		resultContainer,
-		processButton,
+
+	compositeContainer := container.New(layout.NewHBoxLayout(),
+		container.New(layout.NewVBoxLayout(), lengthContainer.Container, azimuthContainer.Container), // azimuth and length entry containers
+		layout.NewSpacer(),
+		container.New(layout.NewVBoxLayout(), tab.resultLabel.Container, layout.NewSpacer(), processButton),
 	)
-	return &DirectGeodProbTab{c}
+	tab.Container = container.New(layout.NewVBoxLayout(), coordinatesContainer.Container, compositeContainer)
+
+	return tab
+}
+
+func (t *DirectGeodProbTab) ResolveProbe() {
+
 }

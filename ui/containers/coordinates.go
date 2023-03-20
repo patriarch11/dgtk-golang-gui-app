@@ -8,26 +8,30 @@ import (
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/entries"
 )
 
-type CoordinatesContainer struct {
+type CoordinatesEntryContainer struct {
 	*fyne.Container
+	xEntry *entries.NumericalEntry
+	yEntry *entries.NumericalEntry
 }
 
-func NewCoordinatesContainer() *CoordinatesContainer {
-	xEntry := entries.NewNumericalEntry()
-	yEntry := entries.NewNumericalEntry()
+func NewCoordinatesEntryContainer() *CoordinatesEntryContainer {
+	cont := &CoordinatesEntryContainer{}
+
+	cont.xEntry = entries.NewNumericalEntry()
+	cont.yEntry = entries.NewNumericalEntry()
 
 	xLabel := widget.NewLabel("x")
 	yLabel := widget.NewLabel("y")
 
-	coordsLabel := widget.NewLabel("Координати")
-
-	xContainer := container.New(layout.NewHBoxLayout(), xLabel, xEntry)
-	yContainer := container.New(layout.NewHBoxLayout(), yLabel, yEntry)
+	xContainer := container.New(layout.NewHBoxLayout(), xLabel, cont.xEntry)
+	yContainer := container.New(layout.NewHBoxLayout(), yLabel, cont.yEntry)
 
 	coordsContainer := container.New(layout.NewHBoxLayout(), xContainer, yContainer)
 
-	coordsLabelContainer := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), coordsLabel, layout.NewSpacer())
+	cont.Container = NewCentralNamedContainer("Координати", coordsContainer).Container
+	return cont
+}
 
-	c := container.New(layout.NewVBoxLayout(), coordsLabelContainer, coordsContainer)
-	return &CoordinatesContainer{c}
+func (c *CoordinatesEntryContainer) GetCoordinates() {
+
 }
