@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-type DirectGeodProbTab struct {
+type DirectGeodesicProbTab struct {
 	*fyne.Container
 	resultLabel          *containers.DynamicTextLabel
 	coordinatesContainer *containers.CoordinatesEntryContainer
@@ -20,13 +20,13 @@ type DirectGeodProbTab struct {
 	lengthEntry          *entries.NumericalEntry
 }
 
-func NewDirectGeodProbTab() *DirectGeodProbTab {
-	tab := &DirectGeodProbTab{}
+func NewDirectGeodesicProbTab() *DirectGeodesicProbTab {
+	tab := &DirectGeodesicProbTab{}
 
-	tab.coordinatesContainer = containers.NewCoordinatesEntryContainer()
+	tab.coordinatesContainer = containers.NewCoordinatesEntryContainer("Координати відомої")
 
 	tab.lengthEntry = entries.NewNumericalEntry()
-	lengthContainer := containers.NewLeftNamedContainer("Відстань", tab.lengthEntry)
+	lengthContainer := containers.NewLeftNamedContainer("Відстань до точкки", tab.lengthEntry)
 
 	tab.azimuthEntry = entries.NewNumericalEntry()
 	azimuthContainer := containers.NewLeftNamedContainer("Азимут", tab.azimuthEntry)
@@ -36,21 +36,19 @@ func NewDirectGeodProbTab() *DirectGeodProbTab {
 	processButton := widget.NewButton("Рахувати", func() {
 		tab.ResolveProblem()
 	})
-
 	compositeContainer := container.New(layout.NewHBoxLayout(),
 		container.New(layout.NewVBoxLayout(), lengthContainer.Container, azimuthContainer.Container), // azimuth and length entry containers
 		layout.NewSpacer(),
 		container.New(layout.NewVBoxLayout(), tab.resultLabel.Container, layout.NewSpacer(), processButton),
 	)
 	tab.Container = container.New(layout.NewVBoxLayout(), tab.coordinatesContainer.Container, compositeContainer)
-
 	return tab
 }
 
-func (t *DirectGeodProbTab) ResolveProblem() {
+func (t *DirectGeodesicProbTab) ResolveProblem() {
 	lat, lon := t.coordinatesContainer.GetCoordinates()
 	azimuth, _ := strconv.ParseFloat(t.azimuthEntry.Text, 64)
 	s, _ := strconv.ParseFloat(t.lengthEntry.Text, 64)
-	l := geodesic.WGS84.Direct(lat, lon, azimuth, s)
-	t.resultLabel.SetValue(fmt.Sprintf("Координати точки (%.8f, %.8f).\n", l.Lat2, l.Lon2))
+	res := geodesic.WGS84.Direct(lat, lon, azimuth, s)
+	t.resultLabel.SetValue(fmt.Sprintf("Координати точки:\n%.5f, %.5f\n", res.Lat2, res.Lon2))
 }

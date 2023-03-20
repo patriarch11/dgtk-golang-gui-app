@@ -6,7 +6,6 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/entries"
-	"log"
 	"strconv"
 )
 
@@ -16,7 +15,7 @@ type CoordinatesEntryContainer struct {
 	lonEntry *entries.NumericalEntry
 }
 
-func NewCoordinatesEntryContainer() *CoordinatesEntryContainer {
+func NewCoordinatesEntryContainer(text string) *CoordinatesEntryContainer {
 	cont := &CoordinatesEntryContainer{}
 
 	cont.latEntry = entries.NewNumericalEntry()
@@ -30,19 +29,13 @@ func NewCoordinatesEntryContainer() *CoordinatesEntryContainer {
 
 	coordsContainer := container.New(layout.NewHBoxLayout(), xContainer, yContainer)
 
-	cont.Container = NewCentralNamedContainer("Координати", coordsContainer).Container
+	cont.Container = NewCentralNamedContainer(text, coordsContainer).Container
 	return cont
 }
 
 func (c *CoordinatesEntryContainer) GetCoordinates() (lat, lon float64) {
-	var err error
-	lat, err = strconv.ParseFloat(c.latEntry.Entry.Text, 64)
-	if err != nil {
-		log.Print(err)
-	}
-	lon, err = strconv.ParseFloat(c.lonEntry.Entry.Text, 64)
-	if err != nil {
-		log.Print(err)
-	}
+	lat, _ = strconv.ParseFloat(c.latEntry.Entry.Text, 64)
+
+	lon, _ = strconv.ParseFloat(c.lonEntry.Entry.Text, 64)
 	return
 }
