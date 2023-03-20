@@ -5,6 +5,8 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"github.com/patriarch11/dgtk-golang-gui-app/ui/containers"
+	"github.com/patriarch11/dgtk-golang-gui-app/ui/entries"
 )
 
 type DirectGeodProbTab struct {
@@ -12,21 +14,16 @@ type DirectGeodProbTab struct {
 }
 
 func NewDirectGeodProbTab() *DirectGeodProbTab {
-	// define coordinates container
-	xEntry := widget.NewEntry()
-	xEntry.SetPlaceHolder("x")
-	yEntry := widget.NewEntry()
-	yEntry.SetPlaceHolder("y")
-	coordinatesLabel := widget.NewLabel("Координати")
-	coordinatesContainer := container.NewBorder(coordinatesLabel, nil, xEntry, yEntry)
+
+	coordinatesContainer := containers.NewCoordinatesContainer()
 
 	// define length container
-	lengthEntry := widget.NewEntry()
+	lengthEntry := entries.NewNumericalEntry()
 	lengthLabel := widget.NewLabel("Відстань")
 	lengthContainer := container.NewBorder(lengthLabel, lengthEntry, nil, nil)
 
 	// define azimuth container
-	azimuthEntry := widget.NewEntry()
+	azimuthEntry := entries.NewNumericalEntry()
 	azimuthLabel := widget.NewLabel("Азимут")
 	azimuthContainer := container.NewBorder(azimuthLabel, azimuthEntry, nil, nil)
 
@@ -38,8 +35,8 @@ func NewDirectGeodProbTab() *DirectGeodProbTab {
 	processButton := widget.NewButton("Рахувати", func() {
 
 	})
-	c := container.New(layout.NewAdaptiveGridLayout(2),
-		coordinatesContainer,
+	c := container.New(layout.NewGridLayout(2),
+		coordinatesContainer.Container,
 		lengthContainer,
 		azimuthContainer,
 		resultContainer,
