@@ -2,6 +2,7 @@ package head
 
 import (
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/toolbar"
@@ -20,15 +21,16 @@ func NewTabItem(key ui.TabKey, handle func(ui.AbstractContainer) *widget.Button)
 
 type Container struct {
 	widget.BaseWidget
+	T          *container.AppTabs
 	Toolbar    *widget.Toolbar
 	tabs       map[ui.TabKey]fyne.CanvasObject
 	currentTab fyne.CanvasObject
 }
 
-func NewHeadContainer(initKey ui.TabKey, tabs map[ui.TabKey]fyne.CanvasObject, items []*TabItem) *Container {
+func NewHeadContainer(initKey ui.TabKey, tabs map[ui.TabKey]fyne.CanvasObject, items []*TabItem, t *container.AppTabs) *Container {
 
 	c := &Container{tabs: tabs}
-
+	c.T = t
 	toolbarItems := make([]widget.ToolbarItem, 0, 0)
 
 	for _, item := range items {

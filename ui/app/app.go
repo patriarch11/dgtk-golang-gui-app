@@ -18,8 +18,15 @@ func NewUIApp() *App {
 	ap := app.New()
 	directItem := widget.NewLabel("direct prob")
 	reversedItem := widget.NewLabel("reversed prob")
-	someItem := container.NewBorder(widget.NewLabel("some prob"), nil, nil, nil, widget.NewLabel("china"))
+	input := widget.NewEntry()
+	input.SetPlaceHolder("Enter text...")
+	someItem := container.NewBorder(widget.NewLabel("some prob"), nil, input, nil, widget.NewLabel("china"))
 
+	tabssIt := container.NewAppTabs(
+		container.NewTabItem("Direct", directItem),
+		container.NewTabItem("reversed", reversedItem),
+		container.NewTabItem("some", someItem),
+	)
 	tabs := map[ui.TabKey]fyne.CanvasObject{
 		ui.DIRECT_GEODESIC_PROBLEM:   directItem,
 		ui.REVERSED_GEODESIC_PROBLEM: reversedItem,
@@ -46,10 +53,10 @@ func NewUIApp() *App {
 		}),
 	}
 
-	c := head.NewHeadContainer(ui.DIRECT_GEODESIC_PROBLEM, tabs, tabItems)
+	c := head.NewHeadContainer(ui.DIRECT_GEODESIC_PROBLEM, tabs, tabItems, tabssIt)
 	a := &App{ap, c}
 	window := a.NewWindow("test")
-	window.SetContent(container.NewBorder(a.c.Toolbar, nil, nil, nil, a.c))
+	window.SetContent(tabssIt)
 	window.Show()
 	return a
 }
