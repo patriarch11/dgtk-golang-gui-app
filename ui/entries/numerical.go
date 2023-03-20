@@ -17,7 +17,7 @@ func NewNumericalEntry() *NumericalEntry {
 }
 
 func (e *NumericalEntry) TypedRune(r rune) {
-	if (r >= '0' && r <= '9') || r == '.' || r == ',' {
+	if (r >= '0' && r <= '9') || r == '.' || r == ',' || r == '-' {
 		e.Entry.TypedRune(r)
 	}
 }
