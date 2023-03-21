@@ -6,9 +6,9 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"github.com/patriarch11/dgtk-golang-gui-app/compute"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/containers"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/entries"
-	"github.com/pymaxion/geographiclib-go/geodesic"
 	"strconv"
 )
 
@@ -48,7 +48,7 @@ func NewDirectGeodesicProbTab() *DirectGeodesicProbTab {
 func (t *DirectGeodesicProbTab) ResolveProblem() {
 	lat, lon := t.coordinatesContainer.GetCoordinates()
 	azimuth, _ := strconv.ParseFloat(t.azimuthEntry.Text, 64)
-	s, _ := strconv.ParseFloat(t.lengthEntry.Text, 64)
-	res := geodesic.WGS84.Direct(lat, lon, azimuth, s)
-	t.resultLabel.SetValue(fmt.Sprintf("Coordinates of point:\n%.5f, %.5f\n", res.Lat2, res.Lon2))
+	dist, _ := strconv.ParseFloat(t.lengthEntry.Text, 64)
+	latRes, lonRes := compute.ResolveDirectGeodesicProblem(lat, lon, azimuth, dist)
+	t.resultLabel.SetValue(fmt.Sprintf("Coordinates of point:\n%.5f°, %.5f\n°", latRes, lonRes))
 }

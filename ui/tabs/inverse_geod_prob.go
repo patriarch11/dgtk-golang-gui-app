@@ -6,8 +6,8 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"github.com/patriarch11/dgtk-golang-gui-app/compute"
 	"github.com/patriarch11/dgtk-golang-gui-app/ui/containers"
-	"github.com/pymaxion/geographiclib-go/geodesic"
 )
 
 type InverseGeodesicProbTab struct {
@@ -42,10 +42,9 @@ func NewInverseGeodesicProbTab() *InverseGeodesicProbTab {
 func (t *InverseGeodesicProbTab) ResolveProblem() {
 	lat1, lon1 := t.coordinatesT1Container.GetCoordinates()
 	lat2, lon2 := t.coordinatesT2Container.GetCoordinates()
-	res := geodesic.WGS84.Inverse(lat1, lon1, lat2, lon2)
-
-	t.resultLabel.SetValue(fmt.Sprintf("Azimuth1: %.2f, Azimuth2: %.2f\nDistance: %.2f",
-		res.Azi1, res.Azi2, res.S12))
+	azi1, azi2, dist := compute.ResolveInverseGeodesicProblem(lat1, lon1, lat2, lon2)
+	t.resultLabel.SetValue(fmt.Sprintf("Azimuth1: %.2f°, Azimuth2: %.2f°\nDistance: %.2fm",
+		azi1, azi2, dist))
 }
 
 /*
