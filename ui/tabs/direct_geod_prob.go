@@ -50,5 +50,5 @@ func (t *DirectGeodesicProbTab) ResolveProblem() {
 	azimuth, _ := strconv.ParseFloat(t.azimuthEntry.Text, 64)
 	dist, _ := strconv.ParseFloat(t.lengthEntry.Text, 64)
 	latRes, lonRes := compute.ResolveDirectGeodesicProblem(lat, lon, azimuth, dist)
-	t.resultLabel.SetValue(fmt.Sprintf("Coordinates of point:\n%.5f°, %.5f\n°", latRes, lonRes))
+	t.resultLabel.SetValue(fmt.Sprintf("Coordinates of point:\n%.5f°, %.5f\n", latRes, lonRes))
 }
