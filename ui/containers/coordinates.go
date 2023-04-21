@@ -35,7 +35,6 @@ func NewCoordinatesEntryContainer(text string) *CoordinatesEntryContainer {
 
 func (c *CoordinatesEntryContainer) GetCoordinates() (lat, lon float64) {
 	lat, _ = strconv.ParseFloat(c.latEntry.Entry.Text, 64)
-
 	lon, _ = strconv.ParseFloat(c.lonEntry.Entry.Text, 64)
 	return
 }

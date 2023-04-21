@@ -46,8 +46,3 @@ func (t *InverseGeodesicProbTab) ResolveProblem() {
 	t.resultLabel.SetValue(fmt.Sprintf("Azimuth1: %.2f°, Azimuth2: %.2f°\nDistance: %.2fm",
 		azi1, azi2, dist))
 }
-
-/*
--41.32, 174.81, 40.96, -5.50
--32.06, 115.74, 225, 20000
-*/
